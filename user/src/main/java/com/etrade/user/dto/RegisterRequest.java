@@ -1,6 +1,10 @@
 package com.etrade.user.dto;
 
+import com.etrade.user.model.helpers.Address;
+import com.etrade.user.model.helpers.Prefers;
 import lombok.Data;
+
+import java.time.LocalDate;
 
 @Data
 public class RegisterRequest {
@@ -9,4 +13,8 @@ public class RegisterRequest {
     private String password;
     private String firstname;
     private String lastName;
+    private LocalDate birthDate;
+    private String gender;
+    private Address address;
+    private Prefers prefers;
 }

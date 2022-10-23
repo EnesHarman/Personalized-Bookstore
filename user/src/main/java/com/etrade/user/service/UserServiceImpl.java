@@ -2,15 +2,14 @@ package com.etrade.user.service;
 
 import com.etrade.user.config.keycloak.Credentials;
 import com.etrade.user.config.keycloak.KeycloakConfig;
-import com.etrade.user.core.result.DataResult;
-import com.etrade.user.core.result.Result;
-import com.etrade.user.core.result.SuccessDataResult;
-import com.etrade.user.core.result.SuccessResult;
+import com.etrade.user.core.result.*;
 import com.etrade.user.dto.LoginRequest;
 import com.etrade.user.dto.LoginResponse;
 
 import com.etrade.user.dto.RegisterRequest;
 
+import com.etrade.user.model.User;
+import com.etrade.user.repository.UserRepository;
 import org.keycloak.admin.client.resource.ClientResource;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
@@ -40,13 +39,15 @@ public class UserServiceImpl implements UserService{
     @Value("${app.keycloak.client-id}")
     private String clientId;
     private final WebClient.Builder webClientBuilder;
+    private final UserRepository userRepository;
 
-    public UserServiceImpl(WebClient.Builder webClientBuilder) {
+    public UserServiceImpl(WebClient.Builder webClientBuilder, UserRepository userRepository) {
         this.webClientBuilder = webClientBuilder;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public DataResult<LoginResponse> login(LoginRequest loginRequest) {
+    public DataResult<LoginResponse> login(LoginRequest loginRequest) { //TODO WEBCLIENT
         LoginResponse response = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .build()
@@ -66,6 +67,34 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Result register(RegisterRequest registerRequest) {
+        boolean mongoResult = addUserToMongo(registerRequest);
+        if(!mongoResult){
+            return new ErrorResult("There is a problem with your information. Please check your input.");
+        }
+        addUserToKeycloak(registerRequest);
+        return new SuccessResult("You have registered successfully.");
+    }
+
+    private boolean addUserToMongo(RegisterRequest registerRequest){
+        User user = User.builder()
+                .email(registerRequest.getEmail())
+                .name(registerRequest.getFirstname())
+                .lastName(registerRequest.getLastName())
+                .birthDate(registerRequest.getBirthDate())
+                .gender(registerRequest.getGender())
+                .address(registerRequest.getAddress())
+                .prefers(registerRequest.getPrefers())
+                .build();
+        try {
+            this.userRepository.save(user);
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    private void addUserToKeycloak(RegisterRequest registerRequest) {
         CredentialRepresentation credential = Credentials
                 .createPasswordCredentials(registerRequest.getPassword());
         UserRepresentation user = new UserRepresentation();
@@ -83,7 +112,6 @@ public class UserServiceImpl implements UserService{
                 .filter(userRep -> userRep.getUsername().equals(registerRequest.getUserName())).collect(Collectors.toList());
         user = userList.get(0);
         this.assignRoleToUser(user.getId(), "customer");
-        return new SuccessResult("You have registered successfully.");
     }
 
     private void assignRoleToUser(String userId, String role) {
