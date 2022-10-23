@@ -35,6 +35,6 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<Result> register(HttpServletRequest request, @RequestBody RegisterRequest registerRequest){
         Result result = this.userService.register(registerRequest);
-        return ResponseEntity.ok(result);
+        return result.isSuccess() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
     }
 }
