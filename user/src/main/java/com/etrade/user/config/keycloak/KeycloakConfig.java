@@ -1,4 +1,4 @@
-package com.etrade.user.config;
+package com.etrade.user.config.keycloak;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.keycloak.OAuth2Constants;

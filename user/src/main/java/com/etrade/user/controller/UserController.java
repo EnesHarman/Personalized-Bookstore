@@ -24,16 +24,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/test")
-    public String test(){
-return userService.test();
-    }
-
-    @GetMapping("/test2")
-    public String test2(){
-        return "ex";
-    }
-
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(HttpServletRequest request, @RequestBody LoginRequest loginRequest){
         LoginResponse loginResponse = this.userService.login(loginRequest);

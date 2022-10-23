@@ -1,7 +1,7 @@
 package com.etrade.user.service;
 
-import com.etrade.user.config.Credentials;
-import com.etrade.user.config.KeycloakConfig;
+import com.etrade.user.config.keycloak.Credentials;
+import com.etrade.user.config.keycloak.KeycloakConfig;
 import com.etrade.user.dto.LoginRequest;
 import com.etrade.user.dto.LoginResponse;
 
@@ -39,16 +39,6 @@ public class UserServiceImpl implements UserService{
 
     public UserServiceImpl(WebClient.Builder webClientBuilder) {
         this.webClientBuilder = webClientBuilder;
-    }
-
-    @Override
-    public String test() {
-       return webClientBuilder.build().get()
-                .uri("http://product-service/product/test",
-                        uriBuilder -> uriBuilder.build())
-                .retrieve()
-                .bodyToMono(String.class)
-        .block();
     }
 
     @Override
@@ -92,16 +82,11 @@ public class UserServiceImpl implements UserService{
     }
 
     private void assignRoleToUser(String userId, String role) {
-
         UsersResource usersResource = KeycloakConfig.getInstance().realm(KeycloakConfig.realm).users();
         UserResource userResource = usersResource.get(userId);
-
-        //getting client
         ClientRepresentation clientRepresentation = KeycloakConfig.getInstance().realm(KeycloakConfig.realm).clients().findAll().stream().filter(client -> client.getClientId().equals(clientId)).collect(Collectors.toList()).get(0);
         ClientResource clientResource = KeycloakConfig.getInstance().realm(KeycloakConfig.realm).clients().get(clientRepresentation.getId());
-        //getting role
         RoleRepresentation roleRepresentation = clientResource.roles().list().stream().filter(element -> element.getName().equals(role)).collect(Collectors.toList()).get(0);
-        //assigning to user
         userResource.roles().clientLevel(clientRepresentation.getId()).add(Collections.singletonList(roleRepresentation));
     }
 

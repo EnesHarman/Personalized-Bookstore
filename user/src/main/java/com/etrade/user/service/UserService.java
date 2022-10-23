@@ -5,7 +5,6 @@ import com.etrade.user.dto.LoginResponse;
 import com.etrade.user.dto.RegisterRequest;
 
 public interface UserService {
-    public String test();
 
     LoginResponse login(LoginRequest loginRequest);
 
