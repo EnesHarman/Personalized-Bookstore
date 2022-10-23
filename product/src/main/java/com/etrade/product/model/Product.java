@@ -23,7 +23,9 @@ public class Product {
     private String author;
     private short pageNum;
     private Links links;
-    private int price;
+    private double price;
+    private int stock;
     private String publisher;
+    private String mainImage;
     private List<String> images;
 }
