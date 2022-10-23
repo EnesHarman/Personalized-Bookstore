@@ -28,6 +28,8 @@ protected void configure(HttpSecurity http) throws Exception {
             .antMatchers(HttpMethod.PUT,"/api/product/update/**").hasRole("admin")
             .antMatchers(HttpMethod.GET,"/api/product/list/**").permitAll()
             .antMatchers(HttpMethod.PUT,"/api/product/add-link/**").hasRole("admin")
+            .antMatchers(HttpMethod.PUT,"/api/product//add-stock/**").hasRole("admin")
+            .antMatchers(HttpMethod.PUT,"/api/product/discount/**").hasRole("admin")
             .anyRequest()
             .authenticated();
 

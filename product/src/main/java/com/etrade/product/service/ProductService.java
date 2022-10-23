@@ -22,4 +22,8 @@ public interface ProductService {
     DataResult<List<ListProductRequest>> listByFilter(FilterProductsRequest filterProductsRequest, int page);
 
     Result addLink(Optional<String> id, Links links);
+
+    Result addStock(Optional<String> id, int stockCount);
+
+    Result makeDiscount(Optional<String> id, int discountCount);
 }

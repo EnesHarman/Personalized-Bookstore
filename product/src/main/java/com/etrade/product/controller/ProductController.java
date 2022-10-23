@@ -23,11 +23,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/test")
-    public String test(){
-        System.out.println("Bana Geldi AQ");
-        return "Hello World!";
-    }
+    //TODO GET SINGLE PRODUCT
 
     @PostMapping("/add")
     public ResponseEntity<String> addProduct(@RequestBody AddProductRequest productRequest){
@@ -62,6 +58,18 @@ public class ProductController {
     @PutMapping("/add-link")
     public ResponseEntity<String> addLink(@RequestParam Optional<String> id, @RequestBody Links links){
         Result result = productService.addLink(id, links);
+        return result.isSuccess() ? ResponseEntity.ok(result.getMessage()) : ResponseEntity.badRequest().body(result.getMessage());
+    }
+
+    @PutMapping("/add-stock")
+    public ResponseEntity<String> addStock(@RequestParam Optional<String> id, @RequestParam(defaultValue = "0") int stockCount){
+        Result result = productService.addStock(id, stockCount);
+        return result.isSuccess() ? ResponseEntity.ok(result.getMessage()) : ResponseEntity.badRequest().body(result.getMessage());
+    }
+
+    @PutMapping("/discount")
+    public ResponseEntity<String> makeDiscount(@RequestParam Optional<String> id, @RequestParam(defaultValue = "0") int discountCount){
+        Result result = productService.makeDiscount(id, discountCount);
         return result.isSuccess() ? ResponseEntity.ok(result.getMessage()) : ResponseEntity.badRequest().body(result.getMessage());
     }
 

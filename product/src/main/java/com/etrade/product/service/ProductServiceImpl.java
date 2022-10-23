@@ -1,5 +1,6 @@
 package com.etrade.product.service;
 
+import com.etrade.product.core.config.kafka.events.ProductEvent;
 import com.etrade.product.core.result.*;
 import com.etrade.product.dto.AddProductRequest;
 import com.etrade.product.dto.FilterProductsRequest;
@@ -7,9 +8,10 @@ import com.etrade.product.dto.ListProductRequest;
 import com.etrade.product.model.Product;
 import com.etrade.product.model.helpers.Links;
 import com.etrade.product.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,10 +21,14 @@ import java.util.stream.Collectors;
 @Service
 public class ProductServiceImpl implements ProductService{
 
+    @Value(value = "${kafka.book-topic}")
+    private String topicName;
     private final ProductRepository productRepository;
+    private final KafkaTemplate<String, ProductEvent> kafkaTemplate;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, KafkaTemplate<String, ProductEvent> kafkaTemplate) {
         this.productRepository = productRepository;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override
@@ -113,6 +119,30 @@ public class ProductServiceImpl implements ProductService{
 
     }
 
+    @Override
+    public Result addStock(Optional<String> id, int stockCount) {
+        if(!id.isPresent() || stockCount <= 0){
+            return new ErrorResult("Please check your stock value.");
+        }
+        Product product = productRepository.findById(id.get()).get();
+        product.setStock(product.getStock() + stockCount);
+        productRepository.save(product);
+        return new SuccessResult("Stock of product has increased.");
+    }
+
+    @Override
+    public Result makeDiscount(Optional<String> id, int discountCount) {
+        if(!id.isPresent() || discountCount <= 0){
+            return new ErrorResult("Please check your discount value.");
+        }
+        Product product = productRepository.findById(id.get()).get();
+        product.setPrice(product.getPrice() - (product.getPrice() / 100 * discountCount));
+        productRepository.save(product);
+        kafkaTemplate.send(topicName, castToProductEvent(product, discountCount));
+        return new SuccessResult("New product price has been setting.");
+    }
+
+
     private List<ListProductRequest> castToListDto(List<Product> productList){
         return productList.stream()
                 .map(product -> ListProductRequest.builder()
@@ -123,8 +153,19 @@ public class ProductServiceImpl implements ProductService{
                         .pageNum(product.getPageNum())
                         .links(product.getLinks())
                         .price(product.getPrice())
+                        .stock(product.getStock())
                         .publisher(product.getPublisher())
                         .images(product.getImages())
                         .build()).collect(Collectors.toList());
+    }
+
+    private ProductEvent castToProductEvent(Product product, int discount){
+        return ProductEvent.builder()
+                .id(product.getId())
+                .title(product.getTitle())
+                .price(product.getPrice())
+                .image(product.getMainImage())
+                .discount(discount)
+                .build();
     }
 }
