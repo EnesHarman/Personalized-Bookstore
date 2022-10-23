@@ -2,6 +2,10 @@ package com.etrade.user.service;
 
 import com.etrade.user.config.keycloak.Credentials;
 import com.etrade.user.config.keycloak.KeycloakConfig;
+import com.etrade.user.core.result.DataResult;
+import com.etrade.user.core.result.Result;
+import com.etrade.user.core.result.SuccessDataResult;
+import com.etrade.user.core.result.SuccessResult;
 import com.etrade.user.dto.LoginRequest;
 import com.etrade.user.dto.LoginResponse;
 
@@ -42,8 +46,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public LoginResponse login(LoginRequest loginRequest) {
-        return WebClient.builder()
+    public DataResult<LoginResponse> login(LoginRequest loginRequest) {
+        LoginResponse response = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .build()
                 .post()
@@ -57,10 +61,11 @@ public class UserServiceImpl implements UserService{
                 .retrieve()
                 .bodyToMono(LoginResponse.class)
                 .block();
+        return new SuccessDataResult<>(response);
     }
 
     @Override
-    public boolean register(RegisterRequest registerRequest) {
+    public Result register(RegisterRequest registerRequest) {
         CredentialRepresentation credential = Credentials
                 .createPasswordCredentials(registerRequest.getPassword());
         UserRepresentation user = new UserRepresentation();
@@ -78,7 +83,7 @@ public class UserServiceImpl implements UserService{
                 .filter(userRep -> userRep.getUsername().equals(registerRequest.getUserName())).collect(Collectors.toList());
         user = userList.get(0);
         this.assignRoleToUser(user.getId(), "customer");
-        return true;
+        return new SuccessResult("You have registered successfully.");
     }
 
     private void assignRoleToUser(String userId, String role) {
