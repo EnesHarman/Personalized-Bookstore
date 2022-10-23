@@ -1,7 +1,5 @@
-package com.etrade.user.config;
+package com.etrade.product.core.config;
 
-import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
-import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter;
@@ -19,26 +17,17 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @Configuration
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http.cors().and().csrf().disable()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//                .authorizeRequests(authorize -> authorize
-//                        .antMatchers(HttpMethod.POST,"/api/user/login/**").permitAll()
-//                        .antMatchers(HttpMethod.GET ,"/api/user/test/**").hasRole("admin")
-//                        .anyRequest().authenticated())
-//                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
-//
-//        return http.build();
-//    }
 @Override
 protected void configure(HttpSecurity http) throws Exception {
     super.configure(http);
     http.csrf().disable().cors().disable()
             .authorizeRequests()
-            .antMatchers(HttpMethod.POST,"/api/user/login/**").permitAll()
-            .antMatchers(HttpMethod.POST,"/api/user/register/**").permitAll()
-            .antMatchers(HttpMethod.GET,"/api/user/test2").hasRole("customer")
+            .antMatchers(HttpMethod.GET,"/api/product/test2").hasRole("customer")
+            .antMatchers(HttpMethod.POST,"/api/product/add/**").hasRole("admin")
+            .antMatchers(HttpMethod.DELETE,"/api/product/delete/**").hasRole("admin")
+            .antMatchers(HttpMethod.PUT,"/api/product/update/**").hasRole("admin")
+            .antMatchers(HttpMethod.GET,"/api/product/list/**").permitAll()
+            .antMatchers(HttpMethod.PUT,"/api/product/add-link/**").hasRole("admin")
             .anyRequest()
             .authenticated();
 

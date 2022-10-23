@@ -1,0 +1,29 @@
+package com.etrade.product.model;
+
+import com.etrade.product.model.helpers.Links;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
+
+@Data
+@Document(collection = "products")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Product {
+    @Id
+    private String id;
+    private String isbn;
+    private String title;
+    private String author;
+    private short pageNum;
+    private Links links;
+    private int price;
+    private String publisher;
+    private List<String> images;
+}
