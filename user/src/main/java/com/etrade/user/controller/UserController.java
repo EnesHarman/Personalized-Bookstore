@@ -1,5 +1,7 @@
 package com.etrade.user.controller;
 
+import com.etrade.user.core.result.DataResult;
+import com.etrade.user.core.result.Result;
 import com.etrade.user.dto.LoginRequest;
 import com.etrade.user.dto.LoginResponse;
 import com.etrade.user.dto.RegisterRequest;
@@ -18,31 +20,21 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api/user")
 public class UserController {
 
-    UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/test")
-    public String test(){
-return userService.test();
-    }
-
-    @GetMapping("/test2")
-    public String test2(){
-        return "ex";
-    }
-
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(HttpServletRequest request, @RequestBody LoginRequest loginRequest){
-        LoginResponse loginResponse = this.userService.login(loginRequest);
+    public ResponseEntity<DataResult<LoginResponse>> login(HttpServletRequest request, @RequestBody LoginRequest loginRequest){
+        DataResult<LoginResponse> loginResponse = this.userService.login(loginRequest);
         return ResponseEntity.ok(loginResponse);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(HttpServletRequest request, @RequestBody RegisterRequest registerRequest){
-        this.userService.register(registerRequest);
-        return ResponseEntity.ok("User Added");
+    public ResponseEntity<Result> register(HttpServletRequest request, @RequestBody RegisterRequest registerRequest){
+        Result result = this.userService.register(registerRequest);
+        return ResponseEntity.ok(result);
     }
 }

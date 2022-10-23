@@ -1,7 +1,11 @@
 package com.etrade.user.service;
 
-import com.etrade.user.config.Credentials;
-import com.etrade.user.config.KeycloakConfig;
+import com.etrade.user.config.keycloak.Credentials;
+import com.etrade.user.config.keycloak.KeycloakConfig;
+import com.etrade.user.core.result.DataResult;
+import com.etrade.user.core.result.Result;
+import com.etrade.user.core.result.SuccessDataResult;
+import com.etrade.user.core.result.SuccessResult;
 import com.etrade.user.dto.LoginRequest;
 import com.etrade.user.dto.LoginResponse;
 
@@ -42,18 +46,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String test() {
-       return webClientBuilder.build().get()
-                .uri("http://product-service/product/test",
-                        uriBuilder -> uriBuilder.build())
-                .retrieve()
-                .bodyToMono(String.class)
-        .block();
-    }
-
-    @Override
-    public LoginResponse login(LoginRequest loginRequest) {
-        return WebClient.builder()
+    public DataResult<LoginResponse> login(LoginRequest loginRequest) {
+        LoginResponse response = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .build()
                 .post()
@@ -67,10 +61,11 @@ public class UserServiceImpl implements UserService{
                 .retrieve()
                 .bodyToMono(LoginResponse.class)
                 .block();
+        return new SuccessDataResult<>(response);
     }
 
     @Override
-    public boolean register(RegisterRequest registerRequest) {
+    public Result register(RegisterRequest registerRequest) {
         CredentialRepresentation credential = Credentials
                 .createPasswordCredentials(registerRequest.getPassword());
         UserRepresentation user = new UserRepresentation();
@@ -88,20 +83,15 @@ public class UserServiceImpl implements UserService{
                 .filter(userRep -> userRep.getUsername().equals(registerRequest.getUserName())).collect(Collectors.toList());
         user = userList.get(0);
         this.assignRoleToUser(user.getId(), "customer");
-        return true;
+        return new SuccessResult("You have registered successfully.");
     }
 
     private void assignRoleToUser(String userId, String role) {
-
         UsersResource usersResource = KeycloakConfig.getInstance().realm(KeycloakConfig.realm).users();
         UserResource userResource = usersResource.get(userId);
-
-        //getting client
         ClientRepresentation clientRepresentation = KeycloakConfig.getInstance().realm(KeycloakConfig.realm).clients().findAll().stream().filter(client -> client.getClientId().equals(clientId)).collect(Collectors.toList()).get(0);
         ClientResource clientResource = KeycloakConfig.getInstance().realm(KeycloakConfig.realm).clients().get(clientRepresentation.getId());
-        //getting role
         RoleRepresentation roleRepresentation = clientResource.roles().list().stream().filter(element -> element.getName().equals(role)).collect(Collectors.toList()).get(0);
-        //assigning to user
         userResource.roles().clientLevel(clientRepresentation.getId()).add(Collections.singletonList(roleRepresentation));
     }
 
