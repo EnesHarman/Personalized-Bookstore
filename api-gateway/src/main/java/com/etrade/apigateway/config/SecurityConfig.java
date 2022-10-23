@@ -22,6 +22,10 @@ public class SecurityConfig {
                                 .permitAll()
                                 .pathMatchers("/api/user/register/**")
                                 .permitAll()
+                                .pathMatchers("/api/product/list/**")
+                                .permitAll()
+                                .pathMatchers("/api/product/filter/**")
+                                .permitAll()
                                 .anyExchange()
                                 .authenticated())
                 .oauth2ResourceServer(ServerHttpSecurity.OAuth2ResourceServerSpec::jwt);

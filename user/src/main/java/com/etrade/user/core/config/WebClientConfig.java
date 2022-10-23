@@ -1,4 +1,4 @@
-package com.etrade.user.config;
+package com.etrade.user.core.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
