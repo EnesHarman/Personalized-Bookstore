@@ -25,7 +25,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
     @Override
     public List<ListProductRequest> filterProducts(FilterProductsRequest filterProductsRequest, int page) {
-        Pageable pageable = PageRequest.of(page, 20);
+        Pageable pageable = PageRequest.of(page - 1, 20);
         final Query query = new Query();
         final List<Criteria> criteria = new ArrayList<>();
         if(filterProductsRequest.getAuthor() != null) {

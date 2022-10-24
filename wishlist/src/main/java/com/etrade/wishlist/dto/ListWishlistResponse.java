@@ -1,19 +1,20 @@
-package com.etrade.product.core.config.kafka.events;
+package com.etrade.wishlist.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProductEvent {
+public class ListWishlistResponse {
     private String id;
+    private String productId;
     private String title;
-    private double price;
-    private String image;
-    private int discount;
-    private String type;
+    private String author;
+    private String mainImage;
 }
