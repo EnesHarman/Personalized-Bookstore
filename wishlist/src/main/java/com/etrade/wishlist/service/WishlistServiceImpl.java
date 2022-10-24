@@ -1,9 +1,11 @@
 package com.etrade.wishlist.service;
 
+import com.etrade.wishlist.core.config.kafka.events.ProductEvent;
 import com.etrade.wishlist.core.result.*;
 import com.etrade.wishlist.dto.AddWishlistRequest;
 import com.etrade.wishlist.dto.ListWishlistResponse;
 import com.etrade.wishlist.model.Wishlist;
+import com.etrade.wishlist.model.WishlistMessage;
 import com.etrade.wishlist.repository.WishlistMessageRepository;
 import com.etrade.wishlist.repository.WishlistRepository;
 import org.json.JSONObject;
@@ -58,6 +60,46 @@ public class WishlistServiceImpl implements WishlistService{
         }
         wishlistRepository.delete(wishlist.get());
         return new SuccessResult("The item has removed from your wish list.");
+    }
+
+    @Override
+    public void addDiscountWishlistMessage(ProductEvent message) {
+        List<String> users = getUserEmailWhoHasWishlist(message.getProductId());
+        WishlistMessage discountMessage = getTemplateMessage(message);
+        discountMessage.setMessage("There is a discount on "+message.getTitle()+" .Be fast and don't miss it!");
+        users.stream().forEach(user->{
+            discountMessage.setUserId(user);
+            wishlistMessageRepository.save(discountMessage);
+        });
+        System.out.println("Wishlist discount message added.");
+    }
+
+    @Override
+    public void addStockWishlistMessage(ProductEvent message) {
+        List<String> users = getUserEmailWhoHasWishlist(message.getProductId());
+        WishlistMessage discountMessage = getTemplateMessage(message);
+        discountMessage.setMessage("New stocks added to "+message.getTitle()+" .Be fast and don't miss it!");
+        users.stream().forEach(user->{
+            discountMessage.setUserId(user);
+            wishlistMessageRepository.save(discountMessage);
+        });
+        System.out.println("Wishlist stock message added.");
+    }
+
+    private WishlistMessage getTemplateMessage(ProductEvent message){
+       return WishlistMessage.builder()
+                .createDate(LocalDate.now())
+                .productId(message.getProductId())
+                .title("Stock alert! " + message.getTitle())
+                .image(message.getImage())
+                .build();
+    }
+
+    private List<String> getUserEmailWhoHasWishlist(String productId){
+        return wishlistRepository.findAllByProductId(productId)
+                .stream().map(Wishlist::getUserId).filter(userEmail -> {
+                    return !wishlistMessageRepository.findByUserIdAndProductId(userEmail, productId).isPresent();
+                }).collect(Collectors.toList());
     }
 
     private String getUserEmailFromRequest(HttpServletRequest request){

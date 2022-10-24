@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface WishlistRepository extends MongoRepository<Wishlist, String> {
     List<Wishlist> findAllByUserId(String userId, Pageable pageable);
+    List<Wishlist> findAllByProductId(String productId);
 }

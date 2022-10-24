@@ -17,6 +17,7 @@ import java.time.LocalDate;
 public class WishlistMessage {
     @Id
     private String id;
+    private String productId;
     private String userId;
     private LocalDate createDate;
     private String title;

@@ -162,7 +162,7 @@ public class ProductServiceImpl implements ProductService{
 
     private ProductEvent castToProductEvent(Product product, int discount, String type){
         return ProductEvent.builder()
-                .id(product.getId())
+                .productId(product.getId())
                 .title(product.getTitle())
                 .price(product.getPrice())
                 .image(product.getMainImage())

@@ -1,4 +1,4 @@
-package com.etrade.product.core.config.kafka.events;
+package com.etrade.wishlist.core.config.kafka.events;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

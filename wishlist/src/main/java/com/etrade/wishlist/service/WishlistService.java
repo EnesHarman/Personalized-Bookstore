@@ -1,5 +1,6 @@
 package com.etrade.wishlist.service;
 
+import com.etrade.wishlist.core.config.kafka.events.ProductEvent;
 import com.etrade.wishlist.core.result.DataResult;
 import com.etrade.wishlist.core.result.Result;
 import com.etrade.wishlist.dto.AddWishlistRequest;
@@ -14,4 +15,8 @@ public interface WishlistService {
     DataResult<List<ListWishlistResponse>> listWishlist(HttpServletRequest request, int page);
 
     Result deleteWishlist(String id);
+
+    void addDiscountWishlistMessage(ProductEvent message);
+
+    void addStockWishlistMessage(ProductEvent message);
 }
