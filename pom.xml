@@ -24,6 +24,7 @@
         <module>user</module>
         <module>api-gateway</module>
         <module>wishlist</module>
+        <module>analytic</module>
     </modules>
     <dependencies>
         <dependency>
