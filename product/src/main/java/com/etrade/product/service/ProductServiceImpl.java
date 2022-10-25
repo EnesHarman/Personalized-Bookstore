@@ -1,6 +1,7 @@
 package com.etrade.product.service;
 
 import com.etrade.product.core.config.kafka.events.ProductEvent;
+import com.etrade.product.core.constants.ProductEventTypes;
 import com.etrade.product.core.result.*;
 import com.etrade.product.dto.AddProductRequest;
 import com.etrade.product.dto.FilterProductsRequest;
@@ -92,7 +93,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public DataResult<List<ListProductRequest>> listProducts(int page) {
-        Pageable pageable = PageRequest.of(page,20);
+        Pageable pageable = PageRequest.of(page - 1,20);
         List<Product> products = productRepository.findAll(pageable).getContent();
         return new SuccessDataResult<>(castToListDto(products));
     }
@@ -127,6 +128,7 @@ public class ProductServiceImpl implements ProductService{
         Product product = productRepository.findById(id.get()).get();
         product.setStock(product.getStock() + stockCount);
         productRepository.save(product);
+        kafkaTemplate.send(topicName, castToProductEvent(product, 0, ProductEventTypes.STOCK));
         return new SuccessResult("Stock of product has increased.");
     }
 
@@ -138,7 +140,7 @@ public class ProductServiceImpl implements ProductService{
         Product product = productRepository.findById(id.get()).get();
         product.setPrice(product.getPrice() - (product.getPrice() / 100 * discountCount));
         productRepository.save(product);
-        kafkaTemplate.send(topicName, castToProductEvent(product, discountCount));
+        kafkaTemplate.send(topicName, castToProductEvent(product, discountCount, ProductEventTypes.DISCOUNT));
         return new SuccessResult("New product price has been setting.");
     }
 
@@ -159,13 +161,14 @@ public class ProductServiceImpl implements ProductService{
                         .build()).collect(Collectors.toList());
     }
 
-    private ProductEvent castToProductEvent(Product product, int discount){
+    private ProductEvent castToProductEvent(Product product, int discount, String type){
         return ProductEvent.builder()
-                .id(product.getId())
+                .productId(product.getId())
                 .title(product.getTitle())
                 .price(product.getPrice())
                 .image(product.getMainImage())
                 .discount(discount)
+                .type(type)
                 .build();
     }
 }

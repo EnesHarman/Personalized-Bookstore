@@ -23,7 +23,15 @@
         <module>discovery-server</module>
         <module>user</module>
         <module>api-gateway</module>
+        <module>wishlist</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220924</version>
+        </dependency>
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>
