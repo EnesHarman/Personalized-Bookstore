@@ -22,4 +22,6 @@ public interface WishlistService {
     void addStockWishlistMessage(ProductEvent message);
 
     DataResult<List<WishlistMessage>> listMessages(HttpServletRequest request, int page);
+
+    void clearOldWishlistMessages();
 }
