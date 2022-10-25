@@ -96,6 +96,12 @@ public class WishlistServiceImpl implements WishlistService{
         return new SuccessDataResult<>(messages);
     }
 
+    @Override
+    public void clearOldWishlistMessages() {
+        List<WishlistMessage> messages = wishlistMessageRepository.getOldWishlistMessages();
+        wishlistMessageRepository.deleteAll(messages);
+    }
+
     private WishlistMessage getTemplateMessage(ProductEvent message){
        return WishlistMessage.builder()
                 .createDate(LocalDate.now())
