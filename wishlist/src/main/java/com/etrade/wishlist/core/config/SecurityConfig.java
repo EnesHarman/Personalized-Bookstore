@@ -25,6 +25,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/add").hasRole("customer")
                 .antMatchers(HttpMethod.GET,"/list").hasRole("customer")
                 .antMatchers(HttpMethod.DELETE,"/delete").hasRole("customer")
+                .antMatchers(HttpMethod.GET,"/list-messages").hasRole("customer")
                 .anyRequest().permitAll();
     }
 

@@ -128,6 +128,7 @@ public class ProductServiceImpl implements ProductService{
         Product product = productRepository.findById(id.get()).get();
         product.setStock(product.getStock() + stockCount);
         productRepository.save(product);
+        kafkaTemplate.send(topicName, castToProductEvent(product, 0, ProductEventTypes.STOCK));
         return new SuccessResult("Stock of product has increased.");
     }
 

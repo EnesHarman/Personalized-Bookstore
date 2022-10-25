@@ -6,6 +6,7 @@ import com.etrade.wishlist.dto.AddWishlistRequest;
 import com.etrade.wishlist.dto.ListWishlistResponse;
 import com.etrade.wishlist.model.Wishlist;
 import com.etrade.wishlist.model.WishlistMessage;
+import com.etrade.wishlist.model.helpers.WishlistMessageType;
 import com.etrade.wishlist.repository.WishlistMessageRepository;
 import com.etrade.wishlist.repository.WishlistRepository;
 import org.json.JSONObject;
@@ -64,9 +65,10 @@ public class WishlistServiceImpl implements WishlistService{
 
     @Override
     public void addDiscountWishlistMessage(ProductEvent message) {
-        List<String> users = getUserEmailWhoHasWishlist(message.getProductId());
+        List<String> users = getUserEmailWhoHasWishlist(message.getProductId(), WishlistMessageType.DISCOUNT);
         WishlistMessage discountMessage = getTemplateMessage(message);
         discountMessage.setMessage("There is a discount on "+message.getTitle()+" .Be fast and don't miss it!");
+        discountMessage.setWishlistMessageType(WishlistMessageType.DISCOUNT);
         users.stream().forEach(user->{
             discountMessage.setUserId(user);
             wishlistMessageRepository.save(discountMessage);
@@ -76,14 +78,22 @@ public class WishlistServiceImpl implements WishlistService{
 
     @Override
     public void addStockWishlistMessage(ProductEvent message) {
-        List<String> users = getUserEmailWhoHasWishlist(message.getProductId());
+        List<String> users = getUserEmailWhoHasWishlist(message.getProductId(), WishlistMessageType.STOCK);
         WishlistMessage discountMessage = getTemplateMessage(message);
         discountMessage.setMessage("New stocks added to "+message.getTitle()+" .Be fast and don't miss it!");
+        discountMessage.setWishlistMessageType(WishlistMessageType.STOCK);
         users.stream().forEach(user->{
             discountMessage.setUserId(user);
             wishlistMessageRepository.save(discountMessage);
         });
         System.out.println("Wishlist stock message added.");
+    }
+
+    @Override
+    public DataResult<List<WishlistMessage>> listMessages(HttpServletRequest request, int page) {
+        Pageable pageable = PageRequest.of(page - 1, 5);
+        List<WishlistMessage> messages = wishlistMessageRepository.findByUserId(getUserEmailFromRequest(request) ,pageable);
+        return new SuccessDataResult<>(messages);
     }
 
     private WishlistMessage getTemplateMessage(ProductEvent message){
@@ -95,10 +105,10 @@ public class WishlistServiceImpl implements WishlistService{
                 .build();
     }
 
-    private List<String> getUserEmailWhoHasWishlist(String productId){
+    private List<String> getUserEmailWhoHasWishlist(String productId, WishlistMessageType wishlistMessageType){
         return wishlistRepository.findAllByProductId(productId)
                 .stream().map(Wishlist::getUserId).filter(userEmail -> {
-                    return !wishlistMessageRepository.findByUserIdAndProductId(userEmail, productId).isPresent();
+                    return !wishlistMessageRepository.findByUserIdAndProductIdAndWishlistMessageType(userEmail, productId, wishlistMessageType).isPresent();
                 }).collect(Collectors.toList());
     }
 

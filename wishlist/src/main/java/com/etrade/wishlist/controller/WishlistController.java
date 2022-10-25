@@ -4,6 +4,7 @@ import com.etrade.wishlist.core.result.DataResult;
 import com.etrade.wishlist.core.result.Result;
 import com.etrade.wishlist.dto.AddWishlistRequest;
 import com.etrade.wishlist.dto.ListWishlistResponse;
+import com.etrade.wishlist.model.WishlistMessage;
 import com.etrade.wishlist.service.WishlistService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +38,11 @@ public class WishlistController {
     public ResponseEntity<String> deleteWishlist(@PathVariable String id){
         Result result = wishlistService.deleteWishlist(id);
         return result.isSuccess() ? ResponseEntity.ok(result.getMessage()) : ResponseEntity.badRequest().body(result.getMessage());
+    }
+
+    @GetMapping("/list-messages")
+    public ResponseEntity<List<WishlistMessage>> listMessages(HttpServletRequest request, @RequestParam(defaultValue = "0") int page){
+        DataResult<List<WishlistMessage>> result = wishlistService.listMessages(request, page);
+        return result.isSuccess() ? ResponseEntity.ok(result.getData()) : ResponseEntity.badRequest().body(result.getData());
     }
 }

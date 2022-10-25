@@ -1,5 +1,6 @@
 package com.etrade.wishlist.model;
 
+import com.etrade.wishlist.model.helpers.WishlistMessageType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,4 +24,5 @@ public class WishlistMessage {
     private String title;
     private String message;
     private String image;
+    private WishlistMessageType wishlistMessageType;
 }
