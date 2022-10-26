@@ -1,6 +1,7 @@
 package com.etrade.event.service;
 
 import com.etrade.event.core.config.kafka.events.AnalyticEvent;
+import com.etrade.event.core.config.kafka.events.MessageEvent;
 import com.etrade.event.core.result.Result;
 import com.etrade.event.core.result.SuccessResult;
 import com.etrade.event.dto.*;
@@ -19,8 +20,11 @@ public class EventServiceImpl implements EventService{
     private String topicName;
     private final KafkaTemplate<String, AnalyticEvent> kafkaTemplate;
 
-    public EventServiceImpl(KafkaTemplate<String, AnalyticEvent> kafkaTemplate) {
+    private final KafkaTemplate<String, MessageEvent> messageKafkaTemplate;
+
+    public EventServiceImpl(KafkaTemplate<String, AnalyticEvent> kafkaTemplate, KafkaTemplate<String, MessageEvent> messageKafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
+        this.messageKafkaTemplate = messageKafkaTemplate;
     }
 
     @Override
@@ -81,6 +85,12 @@ public class EventServiceImpl implements EventService{
                 .build();
         kafkaTemplate.send(topicName, analyticEvent);
         return new SuccessResult("Wl Message Click Event has sent.");
+    }
+
+    @Override
+    public Result sendMessage(MessageEvent messageEvent) {
+        messageKafkaTemplate.send("messages-topic", messageEvent);
+        return new SuccessResult("The message has been sent to users.");
     }
 
     private String getUserEmailFromRequest(HttpServletRequest request){

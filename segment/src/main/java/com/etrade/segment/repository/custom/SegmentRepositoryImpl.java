@@ -64,6 +64,6 @@ public class SegmentRepositoryImpl implements SegmentCustomRepository{
             users = users.stream().filter(user-> user.getPrefers().getPrefers().contains(condition.getPrefer())).collect(Collectors.toList());
         }
 
-        return users.stream().map(User::getId).collect(Collectors.toList());
+        return users.stream().map(User::getEmail).collect(Collectors.toList());
     }
 }

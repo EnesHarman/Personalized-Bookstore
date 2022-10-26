@@ -27,6 +27,7 @@
         <module>analytic</module>
         <module>event</module>
         <module>segment</module>
+        <module>message</module>
     </modules>
     <dependencies>
         <dependency>
