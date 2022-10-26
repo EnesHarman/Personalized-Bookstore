@@ -1,4 +1,4 @@
-package com.etrade.event.core.config;
+package com.etrade.message.core.config;
 
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
@@ -17,21 +17,16 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @Configuration
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
-@Override
-protected void configure(HttpSecurity http) throws Exception {
-    super.configure(http);
-    http.csrf().disable().cors().disable()
-            .authorizeRequests()
-            .antMatchers(HttpMethod.POST,"/api/event/send-message/**").hasRole("admin")
-            .antMatchers(HttpMethod.POST,"/api/event/wl-message-click/**").hasRole("customer")
-            .antMatchers(HttpMethod.POST,"/api/event/product-link-click/**").hasRole("customer")
-            .antMatchers(HttpMethod.POST,"/api/event/product-click/**").hasRole("customer")
-            .antMatchers(HttpMethod.POST,"/api/event/message-click/**").hasRole("customer")
-            .antMatchers(HttpMethod.POST,"/api/event/login-event/**").hasRole("customer")
-            .anyRequest()
-            .authenticated();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        super.configure(http);
+        http.csrf().disable().cors().disable()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET,"/list/**").hasRole("customer")
+                .antMatchers(HttpMethod.GET,"/list-single/**").hasRole("customer")
 
-}
+                .anyRequest().permitAll();
+    }
 
     @Autowired
     public void configureGlobal( AuthenticationManagerBuilder auth) throws Exception {
@@ -53,5 +48,4 @@ protected void configure(HttpSecurity http) throws Exception {
         filter.setSessionAuthenticationStrategy(this.sessionAuthenticationStrategy());
         return filter;
     }
-
 }

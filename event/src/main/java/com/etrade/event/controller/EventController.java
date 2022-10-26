@@ -1,5 +1,6 @@
 package com.etrade.event.controller;
 
+import com.etrade.event.core.config.kafka.events.MessageEvent;
 import com.etrade.event.core.result.Result;
 import com.etrade.event.dto.*;
 import com.etrade.event.service.EventService;
@@ -47,6 +48,12 @@ public class EventController {
     @PostMapping("/login-event")
     public ResponseEntity<String> loginEvent(HttpServletRequest request){
         Result result = eventService.loginEvent(request);
+        return result.isSuccess() ? ResponseEntity.ok(result.getMessage()) : ResponseEntity.internalServerError().body(result.getMessage());
+    }
+
+    @PostMapping("/send-message")
+    public ResponseEntity<String> sendMessageEvent(@RequestBody MessageEvent messageEvent){
+        Result result = eventService.sendMessage(messageEvent);
         return result.isSuccess() ? ResponseEntity.ok(result.getMessage()) : ResponseEntity.internalServerError().body(result.getMessage());
     }
 
