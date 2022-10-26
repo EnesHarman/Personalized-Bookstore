@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(collection = "ml-message-click-event")
+@Document(collection = "wl-message-click-event")
 public class WlMessageClickEvent {
     @Id
     private String id;

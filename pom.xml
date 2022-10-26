@@ -25,6 +25,7 @@
         <module>api-gateway</module>
         <module>wishlist</module>
         <module>analytic</module>
+        <module>event</module>
     </modules>
     <dependencies>
         <dependency>
