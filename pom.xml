@@ -26,6 +26,7 @@
         <module>wishlist</module>
         <module>analytic</module>
         <module>event</module>
+        <module>segment</module>
     </modules>
     <dependencies>
         <dependency>
