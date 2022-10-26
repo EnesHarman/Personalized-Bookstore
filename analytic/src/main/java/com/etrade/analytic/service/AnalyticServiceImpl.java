@@ -3,9 +3,11 @@ package com.etrade.analytic.service;
 import com.etrade.analytic.core.config.kafka.events.AnalyticEvent;
 import com.etrade.analytic.model.*;
 import com.etrade.analytic.repository.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class AnalyticServiceImpl implements AnalyticService{
 
     private LoginEventRepository loginEventRepository;
@@ -29,6 +31,7 @@ public class AnalyticServiceImpl implements AnalyticService{
                 .loginDate(analyticEvent.getTime())
                 .build();
         loginEventRepository.save(loginEvent);
+        log.info("Login Event Consumed and Saved");
     }
 
     @Override
@@ -40,6 +43,7 @@ public class AnalyticServiceImpl implements AnalyticService{
                 .linkType(analyticEvent.getProductLinkType().toString())
                 .build();
         productLinkClickEventRepository.save(productLinkClickEvent);
+        log.info("Product Link Click Event Consumed and Saved");
     }
 
     @Override
@@ -50,6 +54,7 @@ public class AnalyticServiceImpl implements AnalyticService{
                 .productId(analyticEvent.getProductId())
                 .build();
         productClickEventRepository.save(productClickEvent);
+        log.info("Product Click Event Consumed and Saved");
     }
 
     @Override
@@ -60,6 +65,7 @@ public class AnalyticServiceImpl implements AnalyticService{
                 .messageId(analyticEvent.getMessageId())
                 .build();
         messageClickEventRepository.save(messageClickEvent);
+        log.info("Message Click Event Consumed and Saved");
     }
 
     @Override
@@ -70,5 +76,6 @@ public class AnalyticServiceImpl implements AnalyticService{
                 .clickDate(analyticEvent.getTime())
                 .build();
         wlMessageClickRepository.save(wlMessageClickEvent);
+        log.info("Wl Message Click Event Consumed and Saved");
     }
 }
