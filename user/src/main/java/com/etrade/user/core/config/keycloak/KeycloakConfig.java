@@ -4,18 +4,24 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
+import org.springframework.beans.factory.annotation.Value;
 
 
 public class KeycloakConfig {
     static Keycloak keycloak = null;
-    final static String serverUrl = "http://localhost:8181/";
+    @Value(value = "${app.keycloak.server-url}")
+    public static String serverUrl;
+    @Value(value = "${app.keycloak.realm}")
+    public static String realm;
+    @Value(value = "${app.keycloak.client-id}")
+    public static String clientId;
+    @Value(value = "${app.keycloak.clientSecret}")
+    public static String clientSecret;
+    @Value(value = "${app.keycloak.clientSecret}")
+    public static String adminUsername;
+    @Value(value = "${app.keycloak.clientSecret}")
+    public static String adminPassword;
 
-    public final static String realm = "bp-etrade";
-
-    public final static String clientId = "bp-etrade-gateway";
-    final static String clientSecret = "rlbJOUbQuRV0GlM7sOqeM9TOa5EyZY5x";
-    final static String userName = "admin";
-    final static String password = "admin";
 
     public KeycloakConfig() {
     }
@@ -27,8 +33,8 @@ public class KeycloakConfig {
                     .serverUrl(serverUrl)
                     .realm(realm)
                     .grantType(OAuth2Constants.PASSWORD)
-                    .username("enes")
-                    .password("1999")
+                    .username(adminUsername)
+                    .password(adminPassword)
                     .clientId(clientId)
                     .clientSecret(clientSecret)
                     .resteasyClient(new ResteasyClientBuilder()
