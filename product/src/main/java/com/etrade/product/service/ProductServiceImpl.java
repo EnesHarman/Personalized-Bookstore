@@ -43,6 +43,7 @@ public class ProductServiceImpl implements ProductService{
                 .price(productRequest.getPrice())
                 .publisher(productRequest.getPublisher())
                 .images(productRequest.getImages())
+                .category(productRequest.getCategory())
                 .build();
 
         try {
@@ -86,6 +87,7 @@ public class ProductServiceImpl implements ProductService{
         product.get().setPrice(updateRequest.getPrice());
         product.get().setPublisher(updateRequest.getPublisher());
         product.get().setImages(updateRequest.getImages());
+        product.get().setCategory(updateRequest.getCategory());
 
         productRepository.save(product.get());
         return new SuccessResult("Product updated");

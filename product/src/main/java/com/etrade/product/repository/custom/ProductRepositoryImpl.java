@@ -60,6 +60,11 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                     filterProductsRequest.getPublisher(), MongoRegexCreator.MatchMode.CONTAINING
             ), "i"));
         }
+        if(filterProductsRequest.getCategory() != null) {
+            query.addCriteria(Criteria.where("category").regex(MongoRegexCreator.INSTANCE.toRegularExpression(
+                    filterProductsRequest.getCategory(), MongoRegexCreator.MatchMode.CONTAINING
+            ), "i"));
+        }
         List<ListProductRequest> products = mongoTemplate.find(query, ListProductRequest.class, "products");
         return PageableExecutionUtils.getPage(
                 products,

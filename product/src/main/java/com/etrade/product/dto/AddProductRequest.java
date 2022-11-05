@@ -22,4 +22,5 @@ public class AddProductRequest {
     private int stock;
     private String publisher;
     private List<String> images;
+    private String category;
 }
