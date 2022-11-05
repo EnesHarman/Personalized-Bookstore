@@ -10,6 +10,7 @@ import com.etrade.product.model.Product;
 import com.etrade.product.model.helpers.Links;
 import com.etrade.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -49,8 +50,10 @@ public class ProductServiceImpl implements ProductService{
         try {
             productRepository.save(product);
             return new SuccessResult("Product added");
-        }catch (Exception e){
-            System.out.println(e);
+        }catch (DuplicateKeyException e){
+            return new ErrorResult("There is already a product with that isbn. Please check your inputs.");
+        }
+        catch (Exception e){
             return new ErrorResult("Product could not added. Please check your inputs.");
         }
     }
