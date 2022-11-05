@@ -8,7 +8,7 @@ import com.etrade.user.dto.RegisterRequest;
 
 public interface UserService {
 
-    DataResult<LoginResponse> login(LoginRequest loginRequest);
+    LoginResponse login(LoginRequest loginRequest);
 
     Result register(RegisterRequest registerRequest);
 }

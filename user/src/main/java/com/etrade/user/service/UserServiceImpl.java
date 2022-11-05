@@ -2,6 +2,7 @@ package com.etrade.user.service;
 
 import com.etrade.user.core.config.keycloak.Credentials;
 import com.etrade.user.core.config.keycloak.KeycloakConfig;
+import com.etrade.user.core.constants.UserRoles;
 import com.etrade.user.core.result.*;
 import com.etrade.user.dto.LoginRequest;
 import com.etrade.user.dto.LoginResponse;
@@ -10,6 +11,8 @@ import com.etrade.user.dto.RegisterRequest;
 
 import com.etrade.user.model.User;
 import com.etrade.user.repository.UserRepository;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.keycloak.admin.client.resource.ClientResource;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
@@ -24,6 +27,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.http.*;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,7 +52,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public DataResult<LoginResponse> login(LoginRequest loginRequest) { //TODO WEBCLIENT
+    public LoginResponse login(LoginRequest loginRequest) { //TODO WEBCLIENT
         LoginResponse response = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .build()
@@ -63,7 +67,8 @@ public class UserServiceImpl implements UserService{
                 .retrieve()
                 .bodyToMono(LoginResponse.class)
                 .block();
-        return new SuccessDataResult<>(response);
+        response.setRole(getUserRoleFromRequest(response.getAccess_token()));
+        return response;
     }
 
     @Override
@@ -133,6 +138,19 @@ public class UserServiceImpl implements UserService{
 
     private UsersResource getInstance(){
         return KeycloakConfig.getInstance().realm(KeycloakConfig.realm).users();
+    }
+
+    private String getUserRoleFromRequest(String token){
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+        String payload = new String(decoder.decode(token.split("\\.")[1]));
+        JSONObject obj = new JSONObject(payload);
+        JSONArray roles = obj.getJSONObject("resource_access").getJSONObject("bp-etrade-gateway").getJSONArray("roles");
+        for (int i=0; i< roles.length(); i++){
+            if(roles.getString(i).equals(UserRoles.ADMIN)){
+                return UserRoles.ADMIN;
+            }
+        }
+        return UserRoles.CUSTOMER;
     }
 
 
