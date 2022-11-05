@@ -5,6 +5,7 @@ import com.etrade.user.model.helpers.Prefers;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class RegisterRequest {
@@ -16,5 +17,5 @@ public class RegisterRequest {
     private LocalDate birthDate;
     private String gender;
     private Address address;
-    private Prefers prefers;
+    private List<String> prefers;
 }

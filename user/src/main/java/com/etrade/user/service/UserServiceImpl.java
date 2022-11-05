@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService{
     public Result register(RegisterRequest registerRequest) {
         boolean mongoResult = addUserToMongo(registerRequest);
         if(!mongoResult){
-            return new ErrorResult("There is a problem with your information. Please check your input.");
+            return new ErrorResult("There is already a user with this e-mail. Please change your information.");
         }
         boolean keycloakResult = addUserToKeycloak(registerRequest);
         if(!keycloakResult){
@@ -98,7 +98,6 @@ public class UserServiceImpl implements UserService{
             this.userRepository.save(user);
             return true;
         }catch (Exception e){
-            System.out.println(e);
             return false;
         }
     }

@@ -1,13 +1,11 @@
 package com.etrade.advice.service;
 
-import com.etrade.advice.core.result.DataResult;
-import com.etrade.advice.core.result.Result;
-import com.etrade.advice.core.result.SuccessDataResult;
-import com.etrade.advice.core.result.SuccessResult;
+import com.etrade.advice.core.result.*;
 import com.etrade.advice.dto.AdviceListCreateRequest;
 import com.etrade.advice.dto.AdviceListResponse;
 import com.etrade.advice.model.Advice;
 import com.etrade.advice.repository.AdviceRepository;
+import org.springframework.dao.DuplicateKeyException;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -35,7 +33,11 @@ public class AdviceServiceImpl implements AdviceService{
                 .createDate(LocalDateTime.now())
                 .productIds(adviceListCreateRequest.getProductIds())
                 .build();
-        adviceRepository.save(advice);
+        try {
+            adviceRepository.save(advice);
+        }catch (DuplicateKeyException duplicateKeyException){
+            return new ErrorDataResult<>("There is already a list with that name. Please change the name.");
+        }
         log.info("AdviceServiceImpl :: createAdviceList :: Advice list has created.");
         return new SuccessResult("Advice list has created.");
     }

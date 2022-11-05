@@ -61,7 +61,7 @@ public class SegmentRepositoryImpl implements SegmentCustomRepository{
         }
         List<User> users = mongoTemplate.find(query, User.class , "users");
         if(condition.getPrefer() != null){
-            users = users.stream().filter(user-> user.getPrefers().getPrefers().contains(condition.getPrefer())).collect(Collectors.toList());
+            users = users.stream().filter(user-> user.getPrefers().contains(condition.getPrefer())).collect(Collectors.toList());
         }
 
         return users.stream().map(User::getEmail).collect(Collectors.toList());
