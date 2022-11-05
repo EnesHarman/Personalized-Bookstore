@@ -9,18 +9,12 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class KeycloakConfig {
     static Keycloak keycloak = null;
-    @Value(value = "${app.keycloak.server-url}")
-    public static String serverUrl;
-    @Value(value = "${app.keycloak.realm}")
-    public static String realm;
-    @Value(value = "${app.keycloak.client-id}")
-    public static String clientId;
-    @Value(value = "${app.keycloak.clientSecret}")
-    public static String clientSecret;
-    @Value(value = "${app.keycloak.clientSecret}")
-    public static String adminUsername;
-    @Value(value = "${app.keycloak.clientSecret}")
-    public static String adminPassword;
+    public static String serverUrl = "http://localhost:8181/";
+    public static String realm = "bp-etrade";
+    public static String clientId = "bp-etrade-gateway";
+    public static String clientSecret = "VCkgjZEIZHZ1l3ILu8R9P6mhwtZV8PhE";
+    public static String adminUsername = "enes";
+    public static String adminPassword = "1999"; //not a good place to set it lol
 
 
     public KeycloakConfig() {

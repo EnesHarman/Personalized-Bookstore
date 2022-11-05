@@ -19,4 +19,5 @@ public class FilterProductsRequest {
     private int minPrice;
     private int maxPrice;
     private String publisher;
+    private String category;
 }

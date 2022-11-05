@@ -24,6 +24,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.http.*;
 
 
+import javax.ws.rs.core.Response;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -71,7 +72,10 @@ public class UserServiceImpl implements UserService{
         if(!mongoResult){
             return new ErrorResult("There is a problem with your information. Please check your input.");
         }
-        addUserToKeycloak(registerRequest);
+        boolean keycloakResult = addUserToKeycloak(registerRequest);
+        if(!keycloakResult){
+            return new ErrorResult("There is a problem with your information. Please check your input.");
+        }
         return new SuccessResult("You have registered successfully.");
     }
 
@@ -94,7 +98,7 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    private void addUserToKeycloak(RegisterRequest registerRequest) {
+    private boolean addUserToKeycloak(RegisterRequest registerRequest) {
         CredentialRepresentation credential = Credentials
                 .createPasswordCredentials(registerRequest.getPassword());
         UserRepresentation user = new UserRepresentation();
@@ -106,12 +110,16 @@ public class UserServiceImpl implements UserService{
         user.setEnabled(true);
 
         UsersResource instance = getInstance();
-        instance.create(user);
+        Response response =  instance.create(user);
+        if(response.getStatus() != 201){
+            return false;
+        }
 
         List<UserRepresentation> userList = KeycloakConfig.getInstance().realm(KeycloakConfig.realm).users().search(registerRequest.getUserName()).stream()
                 .filter(userRep -> userRep.getUsername().equals(registerRequest.getUserName())).collect(Collectors.toList());
         user = userList.get(0);
         this.assignRoleToUser(user.getId(), "customer");
+        return true;
     }
 
     private void assignRoleToUser(String userId, String role) {

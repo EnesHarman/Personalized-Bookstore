@@ -1,5 +1,6 @@
 package com.etrade.product.model;
 
+import com.etrade.product.core.constants.ProductCategories;
 import com.etrade.product.model.helpers.Links;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,4 +29,5 @@ public class Product {
     private String publisher;
     private String mainImage;
     private List<String> images;
+    private String category;
 }
