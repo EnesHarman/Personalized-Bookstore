@@ -1,7 +1,6 @@
 package com.etrade.user.core.config;
 
-import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
-import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
+
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter;
@@ -15,22 +14,43 @@ import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
-@Override
-protected void configure(HttpSecurity http) throws Exception {
-    super.configure(http);
-    http.csrf().disable().cors().disable()
-            .authorizeRequests()
-            .antMatchers(HttpMethod.POST,"/api/user/login/**").permitAll()
-            .antMatchers(HttpMethod.POST,"/api/user/register/**").permitAll()
-            .antMatchers(HttpMethod.GET,"/api/user/test2").hasRole("customer")
-            .anyRequest()
-            .authenticated();
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(false);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("HEAD");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("PATCH");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
 
-}
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        super.configure(http);
+        http.csrf().disable().cors().and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST,"/api/user/login/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/user/register/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/user/test2").hasRole("customer")
+                .anyRequest()
+                .authenticated();
+
+    }
 
     @Autowired
     public void configureGlobal( AuthenticationManagerBuilder auth) throws Exception {
