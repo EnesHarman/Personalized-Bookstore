@@ -14,6 +14,7 @@ public class LoginResponse {
     private String refresh_expires_in;
     private String token_type;
     private String role;
+    private String name;
 
     public LoginResponse(String access_token, String refresh_token, String expires_in, String refresh_expires_in, String token_type) {
         this.access_token = access_token;

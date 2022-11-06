@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService{
                 .bodyToMono(LoginResponse.class)
                 .block();
         response.setRole(getUserRoleFromRequest(response.getAccess_token()));
+        response.setName(getUserNameFromToken(response.getAccess_token()));
         return response;
     }
 
@@ -150,6 +151,14 @@ public class UserServiceImpl implements UserService{
             }
         }
         return UserRoles.CUSTOMER;
+    }
+
+    private String getUserNameFromToken(String token){
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+        String payload = new String(decoder.decode(token.split("\\.")[1]));
+        JSONObject obj = new JSONObject(payload);
+
+        return obj.getString("name");
     }
 
 
