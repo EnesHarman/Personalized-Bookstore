@@ -3,6 +3,7 @@ package com.etrade.apigateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -17,6 +18,9 @@ import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.CorsUtils;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.reactive.config.CorsRegistry;
+import org.springframework.web.reactive.config.EnableWebFlux;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
@@ -25,14 +29,17 @@ import reactor.core.publisher.Mono;
 import java.util.Arrays;
 import java.util.Collections;
 
-@Configuration
 @EnableWebFluxSecurity
-public class SecurityConfig{
+@Configuration
+public class SecurityConfig implements WebFluxConfigurer {
+    private static final String FRONTEND_LOCALHOST = "http://localhost:3000";
+
+    
+
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
         serverHttpSecurity
                 .csrf().disable()
-                .cors().disable()
                 .authorizeExchange(exchange ->
                         exchange.pathMatchers("/eureka/**")
                                 .permitAll()
@@ -46,8 +53,24 @@ public class SecurityConfig{
                                 .permitAll()
                                 .anyExchange()
                                 .authenticated())
-                .oauth2ResourceServer(ServerHttpSecurity.OAuth2ResourceServerSpec::jwt);
+                .oauth2ResourceServer()
+                .jwt();
         return serverHttpSecurity.build();
+    }
+
+    @Bean
+    public CorsWebFilter corsWebFilter() {
+
+        final CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.setAllowedOrigins(Collections.singletonList("*"));
+        corsConfig.setMaxAge(3600L);
+        corsConfig.setAllowedMethods(Arrays.asList("GET", "POST"));
+        corsConfig.addAllowedHeader("*");
+
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);
+
+        return new CorsWebFilter(source);
     }
 }
 
