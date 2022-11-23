@@ -1,6 +1,6 @@
 package com.etrade.message.controller;
 
-import com.etrade.message.core.result.DataResult;
+import com.etrade.core.result.DataResult;
 import com.etrade.message.dto.MessageListRequest;
 import com.etrade.message.service.MessageService;
 import org.springframework.http.ResponseEntity;
