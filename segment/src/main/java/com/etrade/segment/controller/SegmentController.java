@@ -1,7 +1,6 @@
 package com.etrade.segment.controller;
 
-import com.etrade.segment.core.result.DataResult;
-import com.etrade.segment.core.result.Result;
+import com.etrade.core.result.*;
 import com.etrade.segment.dto.SegmentCreateRequest;
 import com.etrade.segment.dto.SegmentListResponse;
 import com.etrade.segment.service.SegmentService;

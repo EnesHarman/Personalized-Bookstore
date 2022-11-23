@@ -1,7 +1,7 @@
 package com.etrade.segment.service;
 
 import com.etrade.segment.core.config.hazelcast.HazelcastClient;
-import com.etrade.segment.core.result.*;
+import com.etrade.core.result.*;
 import com.etrade.segment.dto.SegmentCache;
 import com.etrade.segment.dto.SegmentCreateRequest;
 import com.etrade.segment.dto.SegmentListResponse;

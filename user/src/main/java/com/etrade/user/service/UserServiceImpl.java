@@ -3,7 +3,7 @@ package com.etrade.user.service;
 import com.etrade.user.core.config.keycloak.Credentials;
 import com.etrade.user.core.config.keycloak.KeycloakConfig;
 import com.etrade.user.core.constants.UserRoles;
-import com.etrade.user.core.result.*;
+import com.etrade.core.result.*;
 import com.etrade.user.dto.LoginRequest;
 import com.etrade.user.dto.LoginResponse;
 

@@ -1,7 +1,7 @@
 package com.etrade.wishlist.service;
 
 import com.etrade.wishlist.core.config.kafka.events.ProductEvent;
-import com.etrade.wishlist.core.result.*;
+import com.etrade.core.result.*;
 import com.etrade.wishlist.dto.AddWishlistRequest;
 import com.etrade.wishlist.dto.ListWishlistResponse;
 import com.etrade.wishlist.model.Wishlist;

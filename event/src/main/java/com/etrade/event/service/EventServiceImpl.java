@@ -2,8 +2,7 @@ package com.etrade.event.service;
 
 import com.etrade.event.core.config.kafka.events.AnalyticEvent;
 import com.etrade.event.core.config.kafka.events.MessageEvent;
-import com.etrade.event.core.result.Result;
-import com.etrade.event.core.result.SuccessResult;
+import com.etrade.core.result.*;
 import com.etrade.event.dto.*;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;

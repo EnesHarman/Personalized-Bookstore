@@ -1,9 +1,7 @@
 package com.etrade.message.service;
 
 import com.etrade.message.core.config.kafka.events.MessageEvent;
-import com.etrade.message.core.result.DataResult;
-import com.etrade.message.core.result.ErrorDataResult;
-import com.etrade.message.core.result.SuccessDataResult;
+import com.etrade.core.result.*;
 import com.etrade.message.dto.MessageListRequest;
 import com.etrade.message.model.Message;
 import com.etrade.message.repository.MessageRepository;

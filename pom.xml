@@ -29,6 +29,7 @@
         <module>segment</module>
         <module>message</module>
         <module>advice</module>
+        <module>core</module>
     </modules>
     <dependencies>
         <dependency>

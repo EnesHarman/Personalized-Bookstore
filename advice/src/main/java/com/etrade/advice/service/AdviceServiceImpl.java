@@ -1,6 +1,6 @@
 package com.etrade.advice.service;
 
-import com.etrade.advice.core.result.*;
+import com.etrade.core.result.*;
 import com.etrade.advice.dto.AdviceListCreateRequest;
 import com.etrade.advice.dto.AdviceListResponse;
 import com.etrade.advice.model.Advice;
