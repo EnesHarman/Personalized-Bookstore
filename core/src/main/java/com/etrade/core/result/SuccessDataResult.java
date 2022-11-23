@@ -1,4 +1,4 @@
-package com.etrade.advice.core.result;
+package com.etrade.core.result;
 
 public class SuccessDataResult<T> extends DataResult<T> {
     public SuccessDataResult() {

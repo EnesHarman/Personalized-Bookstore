@@ -1,7 +1,6 @@
 package com.etrade.user.service;
 
-import com.etrade.user.core.result.DataResult;
-import com.etrade.user.core.result.Result;
+import com.etrade.core.result.*;
 import com.etrade.user.dto.LoginRequest;
 import com.etrade.user.dto.LoginResponse;
 import com.etrade.user.dto.RegisterRequest;

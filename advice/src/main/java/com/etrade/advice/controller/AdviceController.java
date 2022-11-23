@@ -1,7 +1,7 @@
 package com.etrade.advice.controller;
 
-import com.etrade.advice.core.result.DataResult;
-import com.etrade.advice.core.result.Result;
+import com.etrade.core.result.DataResult;
+import com.etrade.core.result.Result;
 import com.etrade.advice.dto.AdviceListCreateRequest;
 import com.etrade.advice.dto.AdviceListResponse;
 import com.etrade.advice.service.AdviceService;
