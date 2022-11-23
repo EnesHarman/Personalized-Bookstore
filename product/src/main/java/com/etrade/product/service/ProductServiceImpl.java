@@ -2,7 +2,7 @@ package com.etrade.product.service;
 
 import com.etrade.product.core.config.kafka.events.ProductEvent;
 import com.etrade.product.core.constants.ProductEventTypes;
-import com.etrade.product.core.result.*;
+import com.etrade.core.result.*;
 import com.etrade.product.dto.AddProductRequest;
 import com.etrade.product.dto.FilterProductsRequest;
 import com.etrade.product.dto.ListProductRequest;

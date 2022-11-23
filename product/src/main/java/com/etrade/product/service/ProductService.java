@@ -1,7 +1,6 @@
 package com.etrade.product.service;
 
-import com.etrade.product.core.result.DataResult;
-import com.etrade.product.core.result.Result;
+import com.etrade.core.result.*;
 import com.etrade.product.dto.AddProductRequest;
 import com.etrade.product.dto.FilterProductsRequest;
 import com.etrade.product.dto.ListProductRequest;
