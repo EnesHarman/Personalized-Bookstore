@@ -5,13 +5,8 @@ import com.etrade.user.dto.LoginRequest;
 import com.etrade.user.dto.LoginResponse;
 import com.etrade.user.dto.RegisterRequest;
 import com.etrade.user.service.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletRequest;
 
