@@ -1,6 +1,6 @@
 package com.etrade.product.dto;
 
-import com.etrade.product.model.helpers.Links;
+import com.etrade.core.model.helpers.Links;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

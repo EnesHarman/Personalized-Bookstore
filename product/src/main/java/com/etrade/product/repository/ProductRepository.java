@@ -1,7 +1,7 @@
 package com.etrade.product.repository;
 
 import com.etrade.product.dto.ListProductRequest;
-import com.etrade.product.model.Product;
+import com.etrade.core.model.Product;
 import com.etrade.product.repository.custom.ProductRepositoryCustom;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;

@@ -4,7 +4,7 @@ import com.etrade.core.result.*;
 import com.etrade.product.dto.AddProductRequest;
 import com.etrade.product.dto.FilterProductsRequest;
 import com.etrade.product.dto.ListProductRequest;
-import com.etrade.product.model.helpers.Links;
+import com.etrade.core.model.helpers.Links;
 import com.etrade.product.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

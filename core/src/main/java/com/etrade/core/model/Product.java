@@ -1,7 +1,7 @@
-package com.etrade.product.model;
+package com.etrade.core.model;
 
-import com.etrade.product.core.constants.ProductCategories;
-import com.etrade.product.model.helpers.Links;
+import com.etrade.core.model.helpers.Links;
+import com.etrade.core.model.helpers.Links;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

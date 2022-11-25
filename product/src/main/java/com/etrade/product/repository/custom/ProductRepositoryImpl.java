@@ -2,7 +2,7 @@ package com.etrade.product.repository.custom;
 
 import com.etrade.product.dto.FilterProductsRequest;
 import com.etrade.product.dto.ListProductRequest;
-import com.etrade.product.model.Product;
+import com.etrade.core.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

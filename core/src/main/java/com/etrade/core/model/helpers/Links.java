@@ -1,4 +1,4 @@
-package com.etrade.advice.model.helpers;
+package com.etrade.core.model.helpers;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
