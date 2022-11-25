@@ -1,6 +1,6 @@
 package com.etrade.segment.dto;
 
-import com.etrade.segment.model.helpers.Condition;
+import com.etrade.core.model.helpers.Condition;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

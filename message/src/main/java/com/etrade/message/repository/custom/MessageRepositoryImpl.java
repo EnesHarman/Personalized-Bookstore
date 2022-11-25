@@ -1,12 +1,12 @@
 package com.etrade.message.repository.custom;
 
-import com.etrade.message.model.Message;
-import com.etrade.message.model.Segment;
+import com.etrade.core.model.Message;
+import com.etrade.core.model.Segment;
+import com.etrade.core.model.Message;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 

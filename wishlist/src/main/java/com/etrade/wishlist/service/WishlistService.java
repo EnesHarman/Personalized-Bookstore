@@ -4,7 +4,7 @@ import com.etrade.wishlist.core.config.kafka.events.ProductEvent;
 import com.etrade.core.result.*;
 import com.etrade.wishlist.dto.AddWishlistRequest;
 import com.etrade.wishlist.dto.ListWishlistResponse;
-import com.etrade.wishlist.model.WishlistMessage;
+import com.etrade.core.model.WishlistMessage;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

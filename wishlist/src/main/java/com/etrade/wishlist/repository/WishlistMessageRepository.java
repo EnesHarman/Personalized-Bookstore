@@ -1,7 +1,7 @@
 package com.etrade.wishlist.repository;
 
-import com.etrade.wishlist.model.WishlistMessage;
-import com.etrade.wishlist.model.helpers.WishlistMessageType;
+import com.etrade.core.model.WishlistMessage;
+import com.etrade.core.model.helpers.WishlistMessageType;
 import com.etrade.wishlist.repository.custom.WishlistMessageRepositoryCustom;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;

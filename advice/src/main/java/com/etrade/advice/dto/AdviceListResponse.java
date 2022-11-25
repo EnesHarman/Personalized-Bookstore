@@ -1,6 +1,6 @@
 package com.etrade.advice.dto;
 
-import com.etrade.advice.model.Product;
+import com.etrade.core.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

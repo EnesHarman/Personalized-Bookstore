@@ -1,7 +1,6 @@
 package com.etrade.user.dto;
 
-import com.etrade.user.model.helpers.Address;
-import com.etrade.user.model.helpers.Prefers;
+import com.etrade.core.model.helpers.Address;
 import lombok.Data;
 
 import java.time.LocalDate;

@@ -1,13 +1,12 @@
 package com.etrade.segment.repository.custom;
 
+import com.etrade.core.model.User;
 import com.etrade.segment.dto.SegmentCreateRequest;
-import com.etrade.segment.model.Segment;
-import com.etrade.segment.model.User;
-import com.etrade.segment.model.helpers.Condition;
+import com.etrade.core.model.Segment;
+import com.etrade.core.model.helpers.Condition;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;

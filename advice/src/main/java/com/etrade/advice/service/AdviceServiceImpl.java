@@ -3,7 +3,7 @@ package com.etrade.advice.service;
 import com.etrade.core.result.*;
 import com.etrade.advice.dto.AdviceListCreateRequest;
 import com.etrade.advice.dto.AdviceListResponse;
-import com.etrade.advice.model.Advice;
+import com.etrade.core.model.Advice;
 import com.etrade.advice.repository.AdviceRepository;
 import org.springframework.dao.DuplicateKeyException;
 import lombok.extern.slf4j.Slf4j;

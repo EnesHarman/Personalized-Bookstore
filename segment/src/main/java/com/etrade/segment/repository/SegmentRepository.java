@@ -1,7 +1,7 @@
 package com.etrade.segment.repository;
 
 import com.etrade.segment.dto.SegmentCreateRequest;
-import com.etrade.segment.model.Segment;
+import com.etrade.core.model.Segment;
 import com.etrade.segment.repository.custom.SegmentCustomRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

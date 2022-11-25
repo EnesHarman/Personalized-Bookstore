@@ -1,6 +1,6 @@
 package com.etrade.wishlist.repository.custom;
 
-import com.etrade.wishlist.model.WishlistMessage;
+import com.etrade.core.model.WishlistMessage;
 
 import java.util.List;
 

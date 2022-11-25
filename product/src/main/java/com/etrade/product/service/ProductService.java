@@ -4,7 +4,7 @@ import com.etrade.core.result.*;
 import com.etrade.product.dto.AddProductRequest;
 import com.etrade.product.dto.FilterProductsRequest;
 import com.etrade.product.dto.ListProductRequest;
-import com.etrade.product.model.helpers.Links;
+import com.etrade.core.model.helpers.Links;
 
 import java.util.List;
 import java.util.Optional;

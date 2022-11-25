@@ -5,7 +5,7 @@ import com.etrade.core.result.*;
 import com.etrade.segment.dto.SegmentCache;
 import com.etrade.segment.dto.SegmentCreateRequest;
 import com.etrade.segment.dto.SegmentListResponse;
-import com.etrade.segment.model.Segment;
+import com.etrade.core.model.Segment;
 import com.etrade.segment.repository.SegmentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;

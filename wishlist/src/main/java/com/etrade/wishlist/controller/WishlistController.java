@@ -3,7 +3,7 @@ package com.etrade.wishlist.controller;
 import com.etrade.core.result.*;
 import com.etrade.wishlist.dto.AddWishlistRequest;
 import com.etrade.wishlist.dto.ListWishlistResponse;
-import com.etrade.wishlist.model.WishlistMessage;
+import com.etrade.core.model.WishlistMessage;
 import com.etrade.wishlist.service.WishlistService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

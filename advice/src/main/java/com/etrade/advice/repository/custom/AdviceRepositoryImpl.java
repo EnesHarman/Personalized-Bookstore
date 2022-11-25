@@ -1,9 +1,9 @@
 package com.etrade.advice.repository.custom;
 
 import com.etrade.advice.dto.AdviceListResponse;
-import com.etrade.advice.model.Advice;
-import com.etrade.advice.model.Product;
-import com.etrade.advice.model.Segment;
+import com.etrade.core.model.Advice;
+import com.etrade.core.model.Segment;
+import com.etrade.core.model.Product;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
