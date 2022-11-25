@@ -1,7 +1,7 @@
 package com.etrade.advice.repository.custom;
 
 import com.etrade.advice.dto.AdviceListResponse;
-import com.etrade.advice.model.Advice;
+import com.etrade.core.model.Advice;
 
 import java.util.List;
 

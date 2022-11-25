@@ -9,7 +9,7 @@ import com.etrade.user.dto.LoginResponse;
 
 import com.etrade.user.dto.RegisterRequest;
 
-import com.etrade.user.model.User;
+import com.etrade.core.model.User;
 import com.etrade.user.repository.UserRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
