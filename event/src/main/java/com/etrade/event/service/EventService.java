@@ -1,7 +1,7 @@
 package com.etrade.event.service;
 
 import com.etrade.event.core.config.kafka.events.MessageEvent;
-import com.etrade.core.result.Result;
+import com.etrade.event.core.result.Result;
 import com.etrade.event.dto.*;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
 package com.etrade.event.controller;
 
 import com.etrade.event.core.config.kafka.events.MessageEvent;
-import com.etrade.core.result.Result;
+import com.etrade.event.core.result.Result;
 import com.etrade.event.dto.*;
 import com.etrade.event.service.EventService;
 import org.springframework.http.ResponseEntity;
