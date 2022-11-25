@@ -1,4 +1,4 @@
-package com.etrade.analytic.model;
+package com.etrade.core.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(collection = "wl-message-click-event")
-public class WlMessageClickEvent {
+@Document(collection = "message-click-event")
+public class MessageClickEvent {
     @Id
     private String id;
     private String userEmail;
-    private String wlMessageId;
     private LocalDateTime clickDate;
+    private String messageId;
 }

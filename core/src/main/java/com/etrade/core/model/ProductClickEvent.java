@@ -1,4 +1,4 @@
-package com.etrade.analytic.model;
+package com.etrade.core.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,10 +13,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(collection = "login-event")
-public class LoginEvent {
+@Document(collection = "product-click-event")
+public class ProductClickEvent {
     @Id
     private String id;
     private String userEmail;
-    private LocalDateTime loginDate;
+    private LocalDateTime clickDate;
+    private String productId;
 }

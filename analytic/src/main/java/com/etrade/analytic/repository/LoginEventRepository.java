@@ -1,6 +1,6 @@
 package com.etrade.analytic.repository;
 
-import com.etrade.analytic.model.LoginEvent;
+import com.etrade.core.model.LoginEvent;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
