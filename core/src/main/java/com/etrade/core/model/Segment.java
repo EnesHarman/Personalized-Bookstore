@@ -1,6 +1,6 @@
-package com.etrade.segment.model;
+package com.etrade.core.model;
 
-import com.etrade.segment.model.helpers.Condition;
+import com.etrade.core.model.helpers.Condition;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
