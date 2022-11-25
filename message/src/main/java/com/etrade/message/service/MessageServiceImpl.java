@@ -3,7 +3,7 @@ package com.etrade.message.service;
 import com.etrade.message.core.config.kafka.events.MessageEvent;
 import com.etrade.core.result.*;
 import com.etrade.message.dto.MessageListRequest;
-import com.etrade.message.model.Message;
+import com.etrade.core.model.Message;
 import com.etrade.message.repository.MessageRepository;
 import org.json.JSONObject;
 import org.springframework.data.domain.PageRequest;

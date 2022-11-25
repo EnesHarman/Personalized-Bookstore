@@ -1,4 +1,4 @@
-package com.etrade.message.model;
+package com.etrade.core.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
