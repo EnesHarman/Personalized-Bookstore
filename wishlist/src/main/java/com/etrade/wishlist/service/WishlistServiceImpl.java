@@ -1,12 +1,13 @@
 package com.etrade.wishlist.service;
 
+import com.etrade.core.model.Wishlist;
 import com.etrade.wishlist.core.config.kafka.events.ProductEvent;
 import com.etrade.core.result.*;
 import com.etrade.wishlist.dto.AddWishlistRequest;
 import com.etrade.wishlist.dto.ListWishlistResponse;
-import com.etrade.wishlist.model.Wishlist;
-import com.etrade.wishlist.model.WishlistMessage;
-import com.etrade.wishlist.model.helpers.WishlistMessageType;
+import com.etrade.core.model.Wishlist;
+import com.etrade.core.model.WishlistMessage;
+import com.etrade.core.model.helpers.WishlistMessageType;
 import com.etrade.wishlist.repository.WishlistMessageRepository;
 import com.etrade.wishlist.repository.WishlistRepository;
 import org.json.JSONObject;

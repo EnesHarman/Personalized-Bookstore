@@ -1,6 +1,6 @@
 package com.etrade.wishlist.repository.custom;
 
-import com.etrade.wishlist.model.WishlistMessage;
+import com.etrade.core.model.WishlistMessage;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;

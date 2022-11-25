@@ -1,6 +1,6 @@
 package com.etrade.wishlist.repository;
 
-import com.etrade.wishlist.model.Wishlist;
+import com.etrade.core.model.Wishlist;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

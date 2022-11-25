@@ -1,4 +1,4 @@
-package com.etrade.wishlist.model.helpers;
+package com.etrade.core.model.helpers;
 
 public enum WishlistMessageType {
     STOCK,

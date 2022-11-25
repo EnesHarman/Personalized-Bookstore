@@ -1,6 +1,5 @@
-package com.etrade.wishlist.model;
+package com.etrade.core.model;
 
-import com.etrade.wishlist.model.helpers.WishlistMessageType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,15 +13,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(collection = "wishlist-message")
-public class WishlistMessage {
+@Document(collection = "wishlist-user")
+public class Wishlist {
     @Id
     private String id;
     private String productId;
+    private String title;
+    private String image;
+    private String author;
     private String userId;
     private LocalDate createDate;
-    private String title;
-    private String message;
-    private String image;
-    private WishlistMessageType wishlistMessageType;
 }
