@@ -1,7 +1,7 @@
 package com.etrade.analytic.repository;
 
-import com.etrade.core.model.ProductClickEvent;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.etrade.analytic.model.ProductClickEvent;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProductClickEventRepository extends MongoRepository<ProductClickEvent, String> {
+public interface ProductClickEventRepository extends JpaRepository<ProductClickEvent, Long> {
 }

@@ -1,9 +1,7 @@
 package com.etrade.analytic.repository;
 
-import com.etrade.core.model.LoginEvent;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import com.etrade.analytic.model.LoginEvent;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface LoginEventRepository extends MongoRepository<LoginEvent, String> {
+public interface LoginEventRepository extends JpaRepository<LoginEvent, Long> {
 }

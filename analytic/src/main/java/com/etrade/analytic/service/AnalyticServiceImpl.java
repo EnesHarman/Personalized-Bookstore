@@ -1,7 +1,7 @@
 package com.etrade.analytic.service;
 
 import com.etrade.analytic.core.config.kafka.events.AnalyticEvent;
-import com.etrade.core.model.*;
+import com.etrade.analytic.model.*;
 import com.etrade.analytic.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

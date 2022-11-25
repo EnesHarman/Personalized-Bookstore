@@ -1,7 +1,7 @@
 package com.etrade.analytic.repository;
 
-import com.etrade.core.model.WlMessageClickEvent;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.etrade.analytic.model.WlMessageClickEvent;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface WlMessageClickRepository extends MongoRepository<WlMessageClickEvent, String> {
+public interface WlMessageClickRepository extends JpaRepository<WlMessageClickEvent, Long> {
 }
