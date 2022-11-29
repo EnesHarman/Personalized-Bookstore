@@ -46,6 +46,7 @@ public class SecurityConfig implements WebFluxConfigurer {
                                 .pathMatchers("/api/user/login/**")
                                 .permitAll()
                                 .pathMatchers("/api/user/register/**")
+                                .permitAll().pathMatchers("/api/user/register-collection/**")
                                 .permitAll()
                                 .pathMatchers("/api/product/list/**")
                                 .permitAll()

@@ -28,7 +28,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/api/user/login/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/user/register/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/user/test2").hasRole("customer")
+                .antMatchers(HttpMethod.POST,"/api/user/register-collection/**").permitAll()
                 .anyRequest()
                 .authenticated();
 

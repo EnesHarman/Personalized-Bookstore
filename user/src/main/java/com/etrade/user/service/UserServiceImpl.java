@@ -1,5 +1,7 @@
 package com.etrade.user.service;
 
+import com.etrade.core.model.helpers.Address;
+import com.etrade.core.model.helpers.Prefers;
 import com.etrade.user.core.config.keycloak.Credentials;
 import com.etrade.user.core.config.keycloak.KeycloakConfig;
 import com.etrade.user.core.constants.UserRoles;
@@ -83,6 +85,37 @@ public class UserServiceImpl implements UserService{
             return new ErrorResult("There is a problem with your information. Please check your input.");
         }
         return new SuccessResult("You have registered successfully.");
+    }
+
+    @Override
+    public Result register(List<RegisterRequest> registerRequestList) {
+        List<String> genders = Arrays.asList("male", "female");
+        String[] cities = {"Adana","Adiyaman","Afyon","Agri","Aksaray","Amasya","Ankara","Antalya","Ardahan","Artvin","Aydin","Balikesir","Bartin","Batman","Bayburt","Bilecik","Bingol","Bitlis","Bolu","Burdur","Bursa","Canakkale","Cankiri","Corum","Denizli","Diyarbakir","Duzce","Edirne","Elazig","Erzincan","Erzurum","Eskisehir","Gaziantep","Giresun","Gumushane","Hakkari","Hatay","Igdir","Isparta","Istanbul","Izmir","Kahramanmaras","Karabuk","Karaman","Kars","Kastamonu","Kayseri","Kilis","Kirikkale","Kirklareli","Kirsehir","Kocaeli","Konya","Kutahya","Malatya","Manisa","Mardin","Mersin","Mugla","Mus","Nevsehir","Nigde","Ordu","Osmaniye","Rize","Sakarya","Samsun","Sanliurfa","Siirt","Sinop","Sirnak","Sivas","Tekirdag","Tokat","Trabzon","Tunceli","Usak","Van","Yalova","Yozgat","Zonguldak"};
+        List<String> prefers = Arrays.asList("Horror", "Historical", "Romance", "Fantasy", "Literature");
+
+        registerRequestList.stream().forEach(registerRequest -> {
+            Random ran = new Random();
+            int genderIndex = ran.nextInt(2);
+            int cityIndex = ran.nextInt(81);
+            int preferIndex = ran.nextInt(5);
+
+            Address address = new Address();
+            address.setCountry("Turkey");
+            address.setCity(cities[cityIndex]);
+            registerRequest.setAddress(address);
+
+            registerRequest.setGender(genders.get(genderIndex));
+
+            List<String> userPrefers = new ArrayList<>();
+            userPrefers.add(prefers.get(preferIndex));
+            registerRequest.setPrefers(userPrefers);
+
+            registerRequest.setPassword("0000");
+            registerRequest.setUserName(registerRequest.getEmail()+"d");
+
+            register(registerRequest);
+        });
+        return new SuccessResult("Dummy data stored.");
     }
 
     private boolean addUserToMongo(RegisterRequest registerRequest){
