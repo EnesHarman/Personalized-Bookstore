@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface ProductService {
     Result addProduct(AddProductRequest productRequest);
 
+    Result addProduct(List<AddProductRequest> productRequestList);
+
     Result deleteProduct(Optional<String> id);
 
     Result updateProduct(Optional<String> id, AddProductRequest updateRequest);

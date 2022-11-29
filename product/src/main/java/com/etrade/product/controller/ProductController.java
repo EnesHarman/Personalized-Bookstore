@@ -30,6 +30,13 @@ public class ProductController {
         return result.isSuccess() ? ResponseEntity.ok(result.getMessage()) : ResponseEntity.badRequest().body(result.getMessage());
     }
 
+    @PostMapping("/add-collection")
+    public ResponseEntity<String> addProduct(@RequestBody List<AddProductRequest> productRequestList){
+        Result result = productService.addProduct(productRequestList);
+        return result.isSuccess() ? ResponseEntity.ok(result.getMessage()) : ResponseEntity.badRequest().body(result.getMessage());
+    }
+
+
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteProduct(@RequestParam Optional<String> id){
         Result result = productService.deleteProduct(id);
