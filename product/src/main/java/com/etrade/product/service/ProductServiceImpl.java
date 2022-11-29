@@ -16,8 +16,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +47,7 @@ public class ProductServiceImpl implements ProductService{
                 .publisher(productRequest.getPublisher())
                 .images(productRequest.getImages())
                 .category(productRequest.getCategory())
+                .stock(productRequest.getStock())
                 .build();
 
         try {
@@ -56,6 +59,35 @@ public class ProductServiceImpl implements ProductService{
         catch (Exception e){
             return new ErrorResult("Product could not added. Please check your inputs.");
         }
+    }
+
+    @Override
+    public Result addProduct(List<AddProductRequest> productRequestList) {
+        List<String> genres = Arrays.asList("Horror", "Historical", "Romance", "Fantasy", "Literature");
+        productRequestList.stream().forEach(productRequest -> {
+            Random ran = new Random();
+            int genreIndex = ran.nextInt(5);
+            short pageNum = (short) (ran.nextInt(100) + 100);
+            double price = ran.nextInt(100)+200;
+            int stock = ran.nextInt(10) + 20;
+
+            productRequest.setCategory(genres.get(genreIndex));
+            productRequest.setImages(Arrays.asList("https://printablep.com/uploads/pinterest/book-genres-kids-printables_pin_210731.png"));
+
+            Links links = Links.builder().hepsiBuradaLink("https://www.hepsiburada.com/bir-ask-masali-ahmet-umit-p-HBCV00002Z40TK")
+                    .trendyolLink("https://www.trendyol.com/destek-yayinlari/vazgecilmez-olmanin-sirri-esra-ezmeci-p-368344931?boutiqueId=614935&merchantId=188606")
+                    .build();
+            productRequest.setLinks(links);
+
+            productRequest.setPageNum(pageNum);
+
+            productRequest.setPrice(price);
+
+            productRequest.setStock(stock);
+
+            addProduct(productRequest);
+        });
+        return new SuccessResult("Product collection stored.");
     }
 
     @Override

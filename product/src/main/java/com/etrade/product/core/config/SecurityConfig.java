@@ -22,8 +22,8 @@ protected void configure(HttpSecurity http) throws Exception {
     super.configure(http);
     http.csrf().disable().cors().disable()
             .authorizeRequests()
-            .antMatchers(HttpMethod.GET,"/api/product/test2").hasRole("customer")
             .antMatchers(HttpMethod.POST,"/api/product/add/**").hasRole("admin")
+            .antMatchers(HttpMethod.POST,"/api/product/add-collection/**").hasRole("admin")
             .antMatchers(HttpMethod.DELETE,"/api/product/delete/**").hasRole("admin")
             .antMatchers(HttpMethod.PUT,"/api/product/update/**").hasRole("admin")
             .antMatchers(HttpMethod.GET,"/api/product/list/**").permitAll()

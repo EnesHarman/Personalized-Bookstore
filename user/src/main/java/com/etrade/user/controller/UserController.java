@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -29,6 +30,12 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<Result> register(HttpServletRequest request, @RequestBody RegisterRequest registerRequest){
         Result result = this.userService.register(registerRequest);
+        return result.isSuccess() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
+    }
+
+    @PostMapping("/register-collection")
+    public ResponseEntity<Result> register(HttpServletRequest request, @RequestBody List<RegisterRequest> registerRequestList){
+        Result result = this.userService.register(registerRequestList);
         return result.isSuccess() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
     }
 }
