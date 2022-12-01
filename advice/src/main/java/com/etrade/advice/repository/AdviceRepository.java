@@ -13,4 +13,6 @@ public interface AdviceRepository extends MongoRepository<Advice, String>, Advic
     AdviceListResponse getAdvicesInfo(Advice advice);
 
     Advice getUserAdviceList(String userEmail);
+
+    Advice getDefaultAdvice();
 }

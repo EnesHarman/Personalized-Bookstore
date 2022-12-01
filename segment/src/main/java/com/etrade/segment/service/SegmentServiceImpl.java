@@ -28,7 +28,8 @@ public class SegmentServiceImpl implements SegmentService{
 
     @Override
     public Result createSegment(SegmentCreateRequest segmentCreateRequest) {
-        Segment segment = segmentRepository.createSegment(segmentCreateRequest);
+        long priority = segmentRepository.count() + 1;
+        Segment segment = segmentRepository.createSegment(segmentCreateRequest, priority);
 
         Segment createdSegment = segmentRepository.save(segment);
 

@@ -6,6 +6,6 @@ import com.etrade.core.model.Segment;
 import java.util.List;
 
 public interface SegmentCustomRepository {
-    Segment createSegment(SegmentCreateRequest segmentCreateRequest);
+    Segment createSegment(SegmentCreateRequest segmentCreateRequest, long priority);
     void updateSegments(List<Segment> segments);
 }
