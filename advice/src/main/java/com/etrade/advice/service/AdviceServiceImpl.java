@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,8 +52,13 @@ public class AdviceServiceImpl implements AdviceService{
 
     @Override
     public DataResult<AdviceListResponse> listAdvices(HttpServletRequest request) {
-        String userEmail = getUserEmailFromRequest(request);
-        Advice advice = adviceRepository.getUserAdviceList(userEmail);
+        Advice advice;
+        Optional<String> userEmail = getUserEmailFromRequest(request);
+        if(!userEmail.isPresent()) {
+            advice = adviceRepository.getDefaultAdvice();
+            return new SuccessDataResult<>(adviceRepository.getAdvicesInfo(advice));
+        }
+        advice = adviceRepository.getUserAdviceList(userEmail.get());
         return new SuccessDataResult<>(adviceRepository.getAdvicesInfo(advice)); //TODO NICE SHIT CODE
     }
 
@@ -62,11 +68,14 @@ public class AdviceServiceImpl implements AdviceService{
         return new SuccessResult("The advice has deleted.");
     }
 
-    private String getUserEmailFromRequest(HttpServletRequest request){
+    private Optional<String> getUserEmailFromRequest(HttpServletRequest request){
         Base64.Decoder decoder = Base64.getUrlDecoder();
+        if(request.getHeader("Authorization") == null){
+            return Optional.empty();
+        }
         String token = request.getHeader("Authorization").split("Bearer ")[1];
         String payload = new String(decoder.decode(token.split("\\.")[1]));
         JSONObject obj = new JSONObject(payload);
-        return obj.getString("email");
+        return Optional.of(obj.getString("email"));
     }
 }

@@ -8,6 +8,6 @@ import java.util.List;
 public interface AdviceRepositoryCustom {
     AdviceListResponse getAdvicesInfo(Advice advice);
     Advice getUserAdviceList(String userEmail);
-
+    Advice getDefaultAdvice();
 
 }

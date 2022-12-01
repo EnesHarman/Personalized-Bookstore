@@ -23,4 +23,5 @@ public class Segment {
     private Condition condition;
     private List<String> userIds;
     private LocalDateTime createDate;
+    private short priority;
 }

@@ -21,13 +21,14 @@ public class SegmentRepositoryImpl implements SegmentCustomRepository{
     }
 
     @Override
-    public Segment createSegment(SegmentCreateRequest segmentCreateRequest) {
+    public Segment createSegment(SegmentCreateRequest segmentCreateRequest, long priority) {
         Condition condition = segmentCreateRequest.getCondition();
 
         Segment segment = Segment.builder()
                 .name(segmentCreateRequest.getName())
                 .condition(condition)
                 .createDate(LocalDateTime.now())
+                .priority((short) priority)
                 .build();
         segment.setUserIds(getSegmentUsers(condition));
         return segment;
