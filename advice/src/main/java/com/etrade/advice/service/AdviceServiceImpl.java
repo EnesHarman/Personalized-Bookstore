@@ -1,5 +1,6 @@
 package com.etrade.advice.service;
 
+import com.etrade.advice.core.constants.Messages;
 import com.etrade.core.result.*;
 import com.etrade.advice.dto.AdviceListCreateRequest;
 import com.etrade.advice.dto.AdviceListResponse;
@@ -37,10 +38,10 @@ public class AdviceServiceImpl implements AdviceService{
         try {
             adviceRepository.save(advice);
         }catch (DuplicateKeyException duplicateKeyException){
-            return new ErrorDataResult<>("There is already a list with that name. Please change the name.");
+            return new ErrorDataResult<>(Messages.DUPLICATE_LIST_NAME);
         }
         log.info("AdviceServiceImpl :: createAdviceList :: Advice list has created.");
-        return new SuccessResult("Advice list has created.");
+        return new SuccessResult(Messages.LIST_CREATED);
     }
 
     @Override
@@ -65,7 +66,7 @@ public class AdviceServiceImpl implements AdviceService{
     @Override
     public Result deleteAdviceList(String id) {
         adviceRepository.deleteById(id);
-        return new SuccessResult("The advice has deleted.");
+        return new SuccessResult(Messages.LIST_DELETED);
     }
 
     private Optional<String> getUserEmailFromRequest(HttpServletRequest request){
